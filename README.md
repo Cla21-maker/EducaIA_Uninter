@@ -6,7 +6,7 @@ Sistema de Inteligência Artificial na Personalização do Ensino Corporativo
 
 ## 📋 Sobre o Projeto
 
-Este protótipo demonstra como a Inteligência Artificial pode ser aplicada na personalização do ensino em ambientes corporativos. Desenvolvido como trabalho final das disciplinas Atividade Extensionista I e II do CST em Gestão da Tecnologia da Informação, o projeto alia inovação tecnológica, inclusão digital e práticas de educação corporativa.
+Este protótipo demonstra como a Inteligência Artificial pode ser aplicada na personalização do ensino em ambientes corporativos. Desenvolvido como trabalho final das disciplinas Atividade Extensionista I do CST em Gestão da Tecnologia da Informação, o projeto alia inovação tecnológica, inclusão digital e práticas de educação corporativa.
 
 ### 🎯 Objetivos
 - Investigar e demonstrar o uso de IA na personalização do ensino corporativo
