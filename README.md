@@ -120,8 +120,8 @@ prototipo_visual/
 - **Aluna**: Clarissa da Rosa Videiro
 - **RU**: 5233401
 - **Curso**: CST em Gestão da Tecnologia da Informação
-- **Disciplina**: Atividade Extensionista I e II
-- **Tema**: Uso da Inteligência Artificial na Personalização do Ensino em Ambientes Corporativos
+- **Disciplina**: Atividade Extensionista I
+- **Tema**: EducaIA Corporativa: uso da inteligência artificial na personalização do ensino em ambientes corporativos
 
 ---
 
