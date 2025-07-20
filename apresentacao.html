@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apresentação - EducaIA Corporativa</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f8fafc;
+            min-height: 100vh;
+            color: #334155;
+            line-height: 1.6;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Animações de fundo */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: none;
+            z-index: -1;
+        }
+
+        .header {
+            background: #fff;
+            border-bottom: 1.5px solid #e5e7eb;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            text-decoration: none;
+            color: #008080;
+            font-weight: 800;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: translateY(-2px);
+            color: #006666;
+        }
+
+        .logo i {
+            font-size: 2rem;
+            color: #008080;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background: #f8fafc;
+            padding: 0.8rem 1.5rem;
+            border-radius: 16px;
+            border: 1.5px solid #e5e7eb;
+        }
+
+        .user-details {
+            text-align: right;
+        }
+
+        .user-name {
+            font-weight: 700;
+            color: #008080;
+            font-size: 0.95rem;
+        }
+
+        .user-role {
+            color: #94a3b8;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            background: #008080;
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .main-content {
+            padding: 3rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .container {
+            background: #fff;
+            border-radius: 24px;
+            padding: 3rem;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.06);
+            border: 1.5px solid #e5e7eb;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: #008080;
+            border-radius: 24px 24px 0 0;
+        }
+
+        .section {
+            margin-bottom: 4rem;
+            animation: slideUp 0.8s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section:last-child {
+            margin-bottom: 0;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            font-weight: 900;
+            text-align: center;
+            color: #008080;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+            background: none;
+            -webkit-background-clip: initial;
+            -webkit-text-fill-color: initial;
+            background-clip: initial;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .text-secondary {
+            color: #94a3b8;
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin-bottom: 3rem;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 2px solid #008080;
+            box-shadow: 0 8px 32px rgba(0, 128, 128, 0.08);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: #008080;
+            border-radius: 20px 20px 0 0;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+            gap: 1rem;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #2d3748;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .card-title i {
+            color: #008080;
+            font-size: 1.3rem;
+        }
+
+        .card-subtitle {
+            color: #718096;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .badge {
+            padding: 0.5rem 1rem;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .badge-info {
+            background: #008080;
+            color: white;
+        }
+
+        .badge-success {
+            background: #20b2aa;
+            color: white;
+        }
+
+        .badge-warning {
+            background: #26c6da;
+            color: white;
+        }
+
+        .cards-grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 2rem;
+        }
+
+        .cards-grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 2rem;
+        }
+
+        .mb-3 {
+            margin-bottom: 1rem;
+        }
+
+        .mb-5 {
+            margin-bottom: 3rem;
+        }
+
+        .item-list {
+            list-style: none;
+        }
+
+        .item-list li {
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(226, 232, 240, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        .item-list li:last-child {
+            border-bottom: none;
+        }
+
+        .item-list li:hover {
+            background: rgba(102, 126, 234, 0.05);
+            border-radius: 12px;
+            padding-left: 1rem;
+            margin-left: -1rem;
+        }
+
+        .item-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+
+        .item-title {
+            font-weight: 700;
+            color: #2d3748;
+            font-size: 1rem;
+        }
+
+        .item-subtitle {
+            color: #718096;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .d-flex {
+            display: flex;
+        }
+
+        .gap-2 {
+            gap: 0.5rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            border-radius: 16px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            display: none;
+        }
+
+        .btn-primary {
+            background: #008080;
+            color: white;
+            box-shadow: 0 8px 25px -8px rgba(0, 128, 128, 0.2);
+        }
+
+        .btn-primary:hover {
+            background: #006666;
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #008080;
+            color: white;
+            box-shadow: 0 8px 25px -8px rgba(0, 128, 128, 0.2);
+        }
+
+        .btn-secondary:hover {
+            background: #006666;
+            color: white;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: #008080;
+            border: 2px solid #008080;
+        }
+
+        .btn-outline:hover {
+            background: #008080;
+            color: #fff;
+            border-color: #006666;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .mt-4 {
+            margin-top: 2rem;
+        }
+
+        .footer {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 2rem 0;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            text-align: center;
+            color: #718096;
+        }
+
+        .footer-content p {
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 2rem 1rem;
+            }
+
+            .container {
+                padding: 2rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .cards-grid-2,
+            .cards-grid-3 {
+                grid-template-columns: 1fr;
+            }
+
+            .card-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        /* Animações de entrada */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Remover floating elements */
+        .floating-element { display: none !important; }
+    </style>
+</head>
+<body>
+    <!-- Floating elements for visual appeal -->
+    <!-- Remover floating elements -->
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <a href="index.html" class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span>EducaIA Corporativa</span>
+            </a>
+            <div class="user-info">
+                <div class="user-details">
+                    <div class="user-name">Projeto Acadêmico</div>
+                    <div class="user-role">Apresentação</div>
+                </div>
+                <div class="avatar">PA</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Seção de Introdução -->
+            <section class="section fade-in">
+                <h1 class="section-title">EducaIA Corporativa</h1>
+                <p class="text-center text-secondary mb-5">Sistema de Personalização do Ensino Corporativo usando Inteligência Artificial</p>
+            </section>
+
+            <!-- Seção Sobre o Projeto -->
+            <section class="section fade-in">
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <h2 class="card-title">
+                                <i class="fas fa-info-circle"></i>
+                                Sobre o Projeto
+                            </h2>
+                            <p class="card-subtitle">Projeto acadêmico desenvolvido para a disciplina de Atividade Extensionista II</p>
+                        </div>
+                        <div class="badge badge-info">
+                            <i class="fas fa-graduation-cap"></i>
+                            Acadêmico
+                        </div>
+                    </div>
+                    
+                    <div class="cards-grid-2">
+                        <div class="card">
+                            <h3 class="card-title">
+                                <i class="fas fa-user-graduate"></i>
+                                Aluna
+                            </h3>
+                            <p class="mb-3"><strong>Clarissa Videiro</strong></p>
+                            <p class="mb-3">Estudante de Sistemas de Informação</p>
+                            <p class="mb-3">UNINTER - Centro Universitário Internacional</p>
+                        </div>
+
+                        <div class="card">
+                            <h3 class="card-title">
+                                <i class="fas fa-calendar-alt"></i>
+                                Período
+                            </h3>
+                            <p class="mb-3"><strong>2025.1</strong></p>
+                            <p class="mb-3">Atividade Extensionista II</p>
+                            <p class="mb-3">Trabalho Final</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Seção de Objetivos -->
+            <section class="section fade-in">
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <h2 class="card-title">
+                                <i class="fas fa-target"></i>
+                                Objetivos do Projeto
+                            </h2>
+                            <p class="card-subtitle">Principais metas e propósitos do sistema</p>
+                        </div>
+                    </div>
+
+                    <div class="cards-grid-3">
+                        <div class="card">
+                            <h3 class="card-title">
+                                <i class="fas fa-brain"></i>
+                                Personalização
+                            </h3>
+                            <p>Desenvolver um sistema que adapte o conteúdo educacional às necessidades individuais de cada colaborador, utilizando algoritmos de IA para análise de perfil e histórico de aprendizado.</p>
+                        </div>
+
+                        <div class="card">
+                            <h3 class="card-title">
+                                <i class="fas fa-chart-line"></i>
+                                Engajamento
+                            </h3>
+                            <p>Aumentar o engajamento dos colaboradores com o treinamento corporativo através de interfaces intuitivas, gamificação e feedback personalizado em tempo real.</p>
+                        </div>
+
+                        <div class="card">
+                            <h3 class="card-title">
+                                <i class="fas fa-trophy"></i>
+                                Efetividade
+                            </h3>
+                            <p>Melhorar a efetividade do treinamento corporativo, reduzindo o tempo de aprendizado e aumentando a retenção de conhecimento através de metodologias adaptativas.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Seção de Funcionalidades -->
+            <section class="section fade-in">
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <h2 class="card-title">
+                                <i class="fas fa-cogs"></i>
+                                Funcionalidades Principais
+                            </h2>
+                            <p class="card-subtitle">Recursos e capacidades do sistema</p>
+                        </div>
+                    </div>
+
+                    <div class="cards-grid-2">
+                        <div class="card">
+                            <h3 class="card-title">
+                                <i class="fas fa-user"></i>
+                                Dashboard do Funcionário
+                            </h3>
+                            <ul class="item-list">
+                                <li>
+                                    <div class="item-info">
+                                        <div class="item-title">Progresso Personalizado</div>
+                                        <div class="item-subtitle">Acompanhamento individual do desenvolvimento</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="item-info">
+                                        <div class="item-title">Recomendações de IA</div>
+                                        <div class="item-subtitle">Sugestões baseadas no perfil e histórico</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="item-info">
+                                        <div class="item-title">Metas e Objetivos</div>
+                                        <div class="item-subtitle">Definição e acompanhamento de metas pessoais</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="item-info">
+                                        <div class="item-title">Atividades Recentes</div>
+                                        <div class="item-subtitle">Histórico de ações e conquistas</div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="card">
+                            <h3 class="card-title">
+                                <i class="fas fa-chart-bar"></i>
+                                Dashboard do Gestor
+                            </h3>
+                            <ul class="item-list">
+                                <li>
+                                    <div class="item-info">
+                                        <div class="item-title">Métricas Organizacionais</div>
+                                        <div class="item-subtitle">Visão geral do desempenho da equipe</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="item-info">
+                                        <div class="item-title">Análise por Departamento</div>
+                                        <div class="item-subtitle">Comparativo entre áreas da empresa</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="item-info">
+                                        <div class="item-title">Colaboradores Destaque</div>
+                                        <div class="item-subtitle">Reconhecimento de alto desempenho</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="item-info">
+                                        <div class="item-title">Ações Necessárias</div>
+                                        <div class="item-subtitle">Alertas e intervenções requeridas</div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Seção de Tecnologias -->
+            <section class="section fade-in">
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <h2 class="card-title">
+                                <i class="fas fa-code"></i>
+                                Tecnologias Utilizadas
+                            </h2>
+                            <p class="card-subtitle">Stack tecnológico do projeto</p>
+                        </div>
+                    </div>
+
+                    <div class="cards-grid-3">
+                        <div class="card">
+                            <h3 class="card-title">
+                                <i class="fab fa-html5"></i>
+                                Frontend
+                            </h3>
+                            <p class="mb-3">HTML5, CSS3, JavaScript</p>
+                            <div class="d-flex gap-2">
+                                <span class="badge badge-info">HTML5</span>
+                                <span class="badge badge-info">CSS3</span>
+                                <span class="badge badge-info">JavaScript</span>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <h3 class="card-title">
+                                <i class="fas fa-palette"></i>
+                                Design
+                            </h3>
+                            <p class="mb-3">Interface moderna e responsiva</p>
+                            <div class="d-flex gap-2">
+                                <span class="badge badge-success">Responsivo</span>
+                                <span class="badge badge-success">Moderno</span>
+                                <span class="badge badge-success">UX/UI</span>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <h3 class="card-title">
+                                <i class="fas fa-robot"></i>
+                                IA e ML
+                            </h3>
+                            <p class="mb-3">Algoritmos de personalização</p>
+                            <div class="d-flex gap-2">
+                                <span class="badge badge-warning">Machine Learning</span>
+                                <span class="badge badge-warning">IA</span>
+                                <span class="badge badge-warning">Algoritmos</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Seção de Benefícios -->
+            <section class="section fade-in">
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <h2 class="card-title">
+                                <i class="fas fa-star"></i>
+                                Benefícios Esperados
+                            </h2>
+                            <p class="card-subtitle">Impactos positivos do sistema</p>
+                        </div>
+                    </div>
+
+                    <div class="cards-grid-2">
+                        <div class="card">
+                            <h3 class="card-title">
+                                <i class="fas fa-users"></i>
+                                Para os Colaboradores
+                            </h3>
+                            <ul class="item-list">
+                                <li>
+                                    <div class="item-info">
+                                        <div class="item-title">Aprendizado Personalizado</div>
+                                        <div class="item-subtitle">Conteúdo adaptado ao perfil individual</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="item-info">
+                                        <div class="item-title">Maior Engajamento</div>
+                                        <div class="item-subtitle">Interface gamificada e interativa</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="item-info">
+                                        <div class="item-title">Desenvolvimento Profissional</div>
+                                        <div class="item-subtitle">Caminho de carreira estruturado</div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="card">
+                            <h3 class="card-title">
+                                <i class="fas fa-building"></i>
+                                Para a Empresa
+                            </h3>
+                            <ul class="item-list">
+                                <li>
+                                    <div class="item-info">
+                                        <div class="item-title">ROI Melhorado</div>
+                                        <div class="item-subtitle">Maior retorno sobre investimento em treinamento</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="item-info">
+                                        <div class="item-title">Produtividade</div>
+                                        <div class="item-subtitle">Colaboradores mais qualificados e motivados</div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="item-info">
+                                        <div class="item-title">Retenção de Talentos</div>
+                                        <div class="item-subtitle">Maior satisfação e permanência dos colaboradores</div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Seção de Navegação -->
+            <section class="section fade-in">
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <h2 class="card-title">
+                                <i class="fas fa-compass"></i>
+                                Navegue pelo Sistema
+                            </h2>
+                            <p class="card-subtitle">Explore as diferentes funcionalidades</p>
+                        </div>
+                    </div>
+
+                    <div class="cards-grid-2">
+                        <div class="card">
+                            <h3 class="card-title">
+                                <i class="fas fa-user"></i>
+                                Dashboard do Funcionário
+                            </h3>
+                            <p class="mb-3">Experimente a interface do colaborador com todas as funcionalidades de aprendizado personalizado.</p>
+                            <a href="funcionario.html" class="btn btn-primary">
+                                <i class="fas fa-arrow-right"></i>
+                                Acessar Dashboard
+                            </a>
+                        </div>
+
+                        <div class="card">
+                            <h3 class="card-title">
+                                <i class="fas fa-chart-bar"></i>
+                                Dashboard do Gestor
+                            </h3>
+                            <p class="mb-3">Visualize as métricas gerenciais e ferramentas de gestão de equipe.</p>
+                            <a href="gestor.html" class="btn btn-secondary">
+                                <i class="fas fa-arrow-right"></i>
+                                Acessar Dashboard
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="text-center mt-4">
+                        <a href="login.html" class="btn btn-outline">
+                            <i class="fas fa-sign-in-alt"></i>
+                            Voltar ao Login
+                        </a>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Card fixo com informações da aluna -->
+    <div id="aluna-card" style="position: fixed; left: 2vw; bottom: 2vh; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.2); border-radius: 16px; box-shadow: 0 8px 32px rgba(0,0,0,0.06); padding: 1rem 1.5rem; min-width: 200px; max-width: 90vw; color: #008080; font-size: 0.95rem; display: flex; flex-direction: column; align-items: flex-start; gap: 0.3rem; animation: slideUp 0.8s ease-out 0.5s both;">
+        <div style="font-weight:800; font-size:1.1rem; display:flex; align-items:center; gap:0.5rem; color: #008080;">
+            <i class="fas fa-user-graduate"></i> Clarissa Videiro
+        </div>
+        <div style="display:flex; align-items:center; gap:0.5rem; color: #008080;">
+            <i class="fas fa-university"></i> UNINTER
+        </div>
+        <div style="display:flex; align-items:center; gap:0.5rem; color: #008080;">
+            <i class="fas fa-book-open"></i> Atividade Extensionista II
+        </div>
+        <div style="display:flex; align-items:center; gap:0.5rem; color: #94a3b8;">
+            <i class="fas fa-calendar-alt"></i> 2025
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content"></div>
+    </footer>
+
+    <script>
+        // Animar elementos ao carregar a página
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animar seções com delay
+            const sections = document.querySelectorAll('.section');
+            sections.forEach((section, index) => {
+                section.style.animationDelay = `${index * 0.2}s`;
+            });
+
+            // Animar cards com delay
+            const cards = document.querySelectorAll('.card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                
+                setTimeout(() => {
+                    card.style.transition = 'all 0.6s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 100 + 500);
+            });
+
+            // Efeito de hover nos cards
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px) scale(1.02)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+
+            // Smooth scroll para links internos
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+        });
+
+        // Efeito de parallax no scroll
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            // Remover efeito de parallax
+        });
+    </script>
+</body>
+</html> 

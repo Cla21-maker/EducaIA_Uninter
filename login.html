@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - EducaIA Corporativa</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f8fafc;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Animações de fundo */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: none;
+            z-index: -1;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-20px) rotate(1deg); }
+            66% { transform: translateY(10px) rotate(-1deg); }
+        }
+
+        .login-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .login-card {
+            background: #fff;
+            border-radius: 24px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.06);
+            padding: 3.5rem 3rem;
+            width: 100%;
+            max-width: 800px;
+            border: 1.5px solid #e5e7eb;
+            position: relative;
+            overflow: hidden;
+            animation: slideUp 0.8s ease-out;
+        }
+
+        .login-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: #008080;
+            border-radius: 24px 24px 0 0;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .login-logo {
+            font-size: 4rem;
+            color: #008080;
+            margin-bottom: 1.5rem;
+            animation: none;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .login-title {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: #008080;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
+            background: none;
+            -webkit-background-clip: initial;
+            -webkit-text-fill-color: initial;
+            background-clip: initial;
+        }
+
+        .login-subtitle {
+            color: #94a3b8;
+            font-size: 1.1rem;
+            font-weight: 500;
+            line-height: 1.6;
+        }
+
+        .form-group {
+            margin-bottom: 1.8rem;
+            position: relative;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.7rem;
+            font-weight: 600;
+            color: #008080;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 16px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #f8fafc;
+            font-weight: 500;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #008080;
+            box-shadow: 0 0 0 4px rgba(0,128,128,0.08);
+            background: #fff;
+            transform: translateY(-2px);
+        }
+
+        .form-input::placeholder {
+            color: #a0aec0;
+            font-weight: 400;
+        }
+
+        .input-group {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 1.2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            z-index: 1;
+        }
+
+        .form-input:focus + .input-icon {
+            color: #008080;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 1.2rem;
+            background: #008080;
+            color: white;
+            border: none;
+            border-radius: 16px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px -8px rgba(0,128,128,0.18);
+            margin-bottom: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .login-btn:hover::before {
+            left: 100%;
+        }
+
+        .login-btn:hover {
+            background: #006666;
+            color: #fff;
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px -10px rgba(0,128,128,0.22);
+        }
+
+        .login-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .login-options {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .login-options a {
+            color: #008080;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+        }
+
+        .login-options a:hover {
+            color: #006666;
+            background: #f1f5f9;
+            transform: translateY(-1px);
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 2rem 0;
+            color: #94a3b8;
+            font-weight: 500;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #e5e7eb;
+        }
+
+        .divider span {
+            padding: 0 1.5rem;
+            font-size: 0.9rem;
+            background: #fff;
+        }
+
+        .demo-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .demo-btn {
+            padding: 1rem 1.5rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 16px;
+            background: #f8fafc;
+            color: #008080;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .demo-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+
+        .demo-btn:hover::before {
+            opacity: 1;
+        }
+
+        .demo-btn:hover {
+            border-color: #008080;
+            background: #e5e7eb;
+            color: #006666;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px -8px rgba(0,128,128,0.18);
+        }
+
+        .demo-btn i {
+            margin-right: 0.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .demo-btn:hover i {
+            transform: translateX(3px);
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .login-card {
+                padding: 2.5rem 2rem;
+                margin: 1rem;
+            }
+
+            .login-title {
+                font-size: 2rem;
+            }
+
+            .demo-buttons {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Loading animation */
+        .loading {
+            position: relative;
+            pointer-events: none;
+        }
+
+        .loading::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            margin: -10px 0 0 -10px;
+            border: 2px solid transparent;
+            border-top: 2px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Toast notification */
+        .toast {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            background: #48bb78;
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+            font-weight: 600;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast.error {
+            background: #f56565;
+        }
+
+        /* Floating elements */
+        .floating-element { display: none !important; }
+        /* Card da aluna */
+        #aluna-card {
+            background: #fff !important;
+            border: 1.5px solid #e5e7eb !important;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.06) !important;
+            color: #008080 !important;
+        }
+        #aluna-card div { color: #008080 !important; }
+    </style>
+</head>
+<body>
+    <!-- Floating elements for visual appeal -->
+    <div class="floating-element">
+        <i class="fas fa-graduation-cap"></i>
+    </div>
+    <div class="floating-element">
+        <i class="fas fa-brain"></i>
+    </div>
+    <div class="floating-element">
+        <i class="fas fa-chart-line"></i>
+    </div>
+
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <div class="login-logo">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1 class="login-title">EducaIA Corporativa</h1>
+                <p class="login-subtitle">Sistema de Personalização do Ensino Corporativo usando Inteligência Artificial</p>
+            </div>
+
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="email" class="form-label">E-mail Corporativo</label>
+                    <div class="input-group">
+                        <input type="email" id="email" class="form-input" placeholder="seu.email@empresa.com" required>
+                        <i class="fas fa-envelope input-icon"></i>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password" class="form-label">Senha</label>
+                    <div class="input-group">
+                        <input type="password" id="password" class="form-input" placeholder="Digite sua senha" required>
+                        <i class="fas fa-lock input-icon"></i>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="perfil" class="form-label">Perfil de Acesso</label>
+                    <div class="input-group">
+                        <select id="perfil" class="form-input" required>
+                            <option value="">Selecione seu perfil...</option>
+                            <option value="funcionario">👤 Funcionário</option>
+                            <option value="gestor">📊 Gestor</option>
+                        </select>
+                        <i class="fas fa-user-tag input-icon"></i>
+                    </div>
+                </div>
+
+                <button type="submit" class="login-btn" id="loginBtn">
+                    <i class="fas fa-sign-in-alt"></i>
+                    <span>Entrar no Sistema</span>
+                </button>
+            </form>
+
+            <div class="login-options">
+                <a href="#" onclick="forgotPassword()">
+                    <i class="fas fa-key"></i>
+                    Esqueceu sua senha?
+                </a>
+            </div>
+
+            <div class="divider">
+                <span>ou acesse diretamente</span>
+            </div>
+
+            <div class="demo-buttons">
+                <a href="funcionario.html" class="demo-btn">
+                    <i class="fas fa-user"></i>
+                    Dashboard Funcionário
+                </a>
+                <a href="gestor.html" class="demo-btn">
+                    <i class="fas fa-chart-bar"></i>
+                    Dashboard Gestor
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast notification -->
+    <div id="toast" class="toast"></div>
+
+    <!-- Card fixo com informações da aluna -->
+    <div id="aluna-card" style="position: fixed; left: 2vw; bottom: 2vh; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.2); border-radius: 16px; box-shadow: 0 8px 32px rgba(0,0,0,0.06); padding: 1rem 1.5rem; min-width: 200px; max-width: 90vw; color: #008080; font-size: 0.95rem; display: flex; flex-direction: column; align-items: flex-start; gap: 0.3rem; animation: slideUp 0.8s ease-out 0.5s both;">
+        <div style="font-weight:800; font-size:1.1rem; display:flex; align-items:center; gap:0.5rem; color: #008080;">
+            <i class="fas fa-user-graduate"></i> Clarissa Videiro
+        </div>
+        <div style="display:flex; align-items:center; gap:0.5rem; color: #008080;">
+            <i class="fas fa-university"></i> UNINTER
+        </div>
+        <div style="display:flex; align-items:center; gap:0.5rem; color: #008080;">
+            <i class="fas fa-book-open"></i> Atividade Extensionista II
+        </div>
+        <div style="display:flex; align-items:center; gap:0.5rem; color: #94a3b8;">
+            <i class="fas fa-calendar-alt"></i> 2025
+        </div>
+    </div>
+
+    <script>
+        // Função para mostrar toast
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = `toast ${type}`;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Validação de email
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+
+        // Manipulação do formulário
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const perfil = document.getElementById('perfil').value;
+            const btn = document.getElementById('loginBtn');
+            
+            // Validações
+            if (!email || !password || !perfil) {
+                showToast('Por favor, preencha todos os campos.', 'error');
+                return;
+            }
+            
+            if (!validateEmail(email)) {
+                showToast('Por favor, insira um e-mail válido.', 'error');
+                return;
+            }
+            
+            if (password.length < 6) {
+                showToast('A senha deve ter pelo menos 6 caracteres.', 'error');
+                return;
+            }
+            
+            // Simular carregamento
+            btn.classList.add('loading');
+            btn.querySelector('span').textContent = 'Entrando...';
+            
+            setTimeout(() => {
+                showToast('Login realizado com sucesso!', 'success');
+                
+                setTimeout(() => {
+                    // Redirecionar baseado no perfil selecionado
+                    if (perfil === 'gestor') {
+                        window.location.href = 'gestor.html';
+                    } else if (perfil === 'funcionario') {
+                        window.location.href = 'funcionario.html';
+                    }
+                }, 1000);
+            }, 1500);
+        });
+
+        function forgotPassword() {
+            showToast('Funcionalidade de recuperação de senha será implementada em breve.', 'error');
+        }
+
+        // Efeitos visuais nos inputs
+        document.querySelectorAll('.form-input').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.style.transform = 'scale(1.02)';
+            });
+            
+            input.addEventListener('blur', function() {
+                this.parentElement.style.transform = 'scale(1)';
+            });
+        });
+
+        // Animação de entrada dos elementos
+        document.addEventListener('DOMContentLoaded', function() {
+            const elements = document.querySelectorAll('.form-group, .login-btn, .demo-buttons');
+            elements.forEach((element, index) => {
+                element.style.opacity = '0';
+                element.style.transform = 'translateY(20px)';
+                
+                setTimeout(() => {
+                    element.style.transition = 'all 0.6s ease';
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }, index * 100 + 300);
+            });
+        });
+
+        // Efeito de digitação no título
+        const title = document.querySelector('.login-title');
+        const originalText = title.textContent;
+        title.textContent = '';
+        
+        let i = 0;
+        const typeWriter = () => {
+            if (i < originalText.length) {
+                title.textContent += originalText.charAt(i);
+                i++;
+                setTimeout(typeWriter, 100);
+            }
+        };
+        
+        setTimeout(typeWriter, 500);
+    </script>
+</body>
+</html> 

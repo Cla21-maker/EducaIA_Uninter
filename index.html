@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EducaIA Corporativa - Sistema de Personalização do Ensino Corporativo</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f8fafc;
+            min-height: 100vh;
+            color: #334155;
+            line-height: 1.6;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Animações de fundo */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(0, 128, 128, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(0, 128, 128, 0.06) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(0, 128, 128, 0.04) 0%, transparent 50%);
+            animation: float 20s ease-in-out infinite;
+            z-index: -1;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-20px) rotate(1deg); }
+            66% { transform: translateY(10px) rotate(-1deg); }
+        }
+
+        /* Header */
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            text-decoration: none;
+            color: #008080;
+            font-weight: 800;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: translateY(-2px);
+            color: #006666;
+        }
+
+        .logo i {
+            font-size: 2rem;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #64748b;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+        }
+
+        .nav-link:hover {
+            color: #008080;
+            background: rgba(0, 128, 128, 0.08);
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, #008080, #008080);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 128, 128, 0.10);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 128, 128, 0.20);
+            background: #006666;
+            color: #fff;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 8rem 2rem 4rem;
+            text-align: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .hero-content {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 4rem 3rem;
+            box-shadow: 
+                0 25px 50px -12px rgba(0, 0, 0, 0.25),
+                0 0 0 1px rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+            animation: slideUp 1s ease-out;
+        }
+
+        .hero-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #008080, #008080);
+            border-radius: 24px 24px 0 0;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: #008080;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: #718096;
+            margin-bottom: 2.5rem;
+            font-weight: 500;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 1rem 2rem;
+            border-radius: 16px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn i {
+            color: inherit;
+            font-size: 1.2rem;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #008080, #008080);
+            color: white;
+            box-shadow: 0 8px 25px -8px rgba(0, 128, 128, 0.18);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px -10px rgba(0, 128, 128, 0.22);
+            background: #006666;
+            color: #fff;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #008080;
+            border: 2px solid #008080;
+        }
+
+        .btn-secondary:hover {
+            background: #f1f5f9;
+            color: #006666;
+            border-color: #006666;
+        }
+
+        /* Features Section */
+        .features {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            text-align: center;
+            color: #008080;
+            margin-bottom: 2.2rem;
+            text-shadow: none;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.1rem;
+        }
+
+        .feature-card {
+            background: #fff;
+            border-radius: 24px;
+            padding: 3.5rem 2.7rem;
+            text-align: center;
+            border: 1.5px solid #e5e7eb;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #008080, #008080);
+            border-radius: 20px 20px 0 0;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .feature-icon i {
+        }
+
+        .feature-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #008080;
+            margin-bottom: 0.7rem;
+        }
+
+        .feature-description {
+            color: #94a3b8;
+            font-size: 1.15rem;
+            line-height: 1.7;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 4rem 2rem;
+            text-align: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .cta-card {
+            background: #fff;
+            border-radius: 24px;
+            padding: 3rem;
+            border: 1.5px solid #e5e7eb;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #008080, #008080);
+            border-radius: 24px 24px 0 0;
+        }
+
+        .cta-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #008080;
+            margin-bottom: 1rem;
+        }
+
+        .cta-subtitle {
+            font-size: 1.2rem;
+            color: #94a3b8;
+            margin-bottom: 2rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* Footer */
+        .footer {
+            background: #fff;
+            border-top: 1.5px solid #e5e7eb;
+            padding: 2rem 0;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            text-align: center;
+            color: #94a3b8;
+        }
+
+        .footer-content p {
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        /* Floating elements */
+        .floating-element {
+            position: absolute;
+            animation: float 6s ease-in-out infinite;
+            pointer-events: none;
+        }
+        
+        .floating-element i {
+        }
+
+        .floating-element:nth-child(1) {
+            top: 15%;
+            left: 5%;
+            font-size: 3rem;
+            color: #008080;
+            animation-delay: 0s;
+        }
+
+        .floating-element:nth-child(2) {
+            top: 25%;
+            right: 10%;
+            font-size: 2rem;
+            color: #008080;
+            animation-delay: 2s;
+        }
+
+        .floating-element:nth-child(3) {
+            bottom: 25%;
+            left: 10%;
+            font-size: 2.5rem;
+            color: #008080;
+            animation-delay: 4s;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .hero {
+                padding: 6rem 1rem 3rem;
+            }
+
+            .hero-content {
+                padding: 3rem 2rem;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+
+            .nav-menu {
+                display: none;
+            }
+
+            .features {
+                padding: 3rem 1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animações de entrada */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Card da aluna */
+        .aluna-card {
+            position: fixed;
+            left: 2vw;
+            bottom: 2vh;
+            z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            padding: 1rem 1.5rem;
+            min-width: 200px;
+            max-width: 90vw;
+            color: #4c51bf;
+            font-size: 0.95rem;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.3rem;
+            animation: slideUp 0.8s ease-out 0.5s both;
+        }
+
+        .aluna-card .name {
+            font-weight: 800;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #008080;
+        }
+        
+        .aluna-card .name i {
+        }
+
+        .aluna-card .info {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #64748b;
+        }
+        
+        .aluna-card .info i {
+        }
+
+        .aluna-card .course {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #94a3b8;
+        }
+        
+        .aluna-card .course i {
+        }
+
+        .aluna-card .year {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #94a3b8;
+        }
+        
+        .aluna-card .year i {
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <a href="index.html" class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span>EducaIA Corporativa</span>
+            </a>
+            <nav class="nav-menu">
+                <a href="#features" class="nav-link">Funcionalidades</a>
+                <a href="apresentacao.html" class="nav-link">Sobre</a>
+                <a href="login.html" class="cta-button">Entrar</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">EducaIA Corporativa</h1>
+            <p class="hero-subtitle">
+                Revolucione o treinamento corporativo com inteligência artificial. 
+                Sistema personalizado que adapta o aprendizado às necessidades individuais 
+                de cada colaborador.
+            </p>
+            <div class="hero-buttons">
+                <a href="login.html" class="btn btn-primary">
+                    <i class="fas fa-rocket"></i>
+                    Começar Agora
+                </a>
+                <a href="apresentacao.html" class="btn btn-secondary">
+                    <i class="fas fa-info-circle"></i>
+                    Saiba Mais
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <h2 class="section-title">Por que escolher o EducaIA?</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <h3 class="feature-title">IA Personalizada</h3>
+                <p class="feature-description">
+                    Algoritmos inteligentes que adaptam o conteúdo educacional 
+                    ao perfil e histórico de aprendizado de cada colaborador.
+                </p>
+            </div>
+
+            <div class="feature-card fade-in">
+                <div class="feature-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <h3 class="feature-title">Métricas Avançadas</h3>
+                <p class="feature-description">
+                    Dashboard completo com análises detalhadas de progresso, 
+                    engajamento e performance individual e organizacional.
+                </p>
+            </div>
+
+            <div class="feature-card fade-in">
+                <div class="feature-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h3 class="feature-title">Gestão Inteligente</h3>
+                <p class="feature-description">
+                    Ferramentas para gestores acompanharem o desenvolvimento 
+                    da equipe e tomarem decisões baseadas em dados.
+                </p>
+            </div>
+
+            <div class="feature-card fade-in">
+                <div class="feature-icon">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <h3 class="feature-title">Responsivo</h3>
+                <p class="feature-description">
+                    Interface moderna e adaptável que funciona perfeitamente 
+                    em qualquer dispositivo, desktop ou mobile.
+                </p>
+            </div>
+
+            <div class="feature-card fade-in">
+                <div class="feature-icon">
+                    <i class="fas fa-trophy"></i>
+                </div>
+                <h3 class="feature-title">Gamificação</h3>
+                <p class="feature-description">
+                    Sistema de recompensas e conquistas que motiva 
+                    os colaboradores a se engajarem no aprendizado.
+                </p>
+            </div>
+
+            <div class="feature-card fade-in">
+                <div class="feature-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3 class="feature-title">Seguro e Confiável</h3>
+                <p class="feature-description">
+                    Plataforma segura com backup automático e 
+                    proteção de dados corporativos.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="cta-card">
+            <h2 class="cta-title">Pronto para transformar o treinamento?</h2>
+            <p class="cta-subtitle">
+                Experimente o futuro da educação corporativa com IA personalizada
+            </p>
+            <div class="cta-buttons">
+                <a href="funcionario.html" class="btn btn-primary">
+                    <i class="fas fa-user"></i>
+                    Dashboard Funcionário
+                </a>
+                <a href="gestor.html" class="btn btn-secondary">
+                    <i class="fas fa-chart-bar"></i>
+                    Dashboard Gestor
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2025 EducaIA Corporativa. Projeto Acadêmico - UNINTER.</p>
+            <p>Desenvolvido por Clarissa Videiro para Atividade Extensionista II</p>
+        </div>
+    </footer>
+
+    <!-- Card fixo com informações da aluna -->
+    <div class="aluna-card">
+        <div class="name">
+            <i class="fas fa-user-graduate"></i> Clarissa Videiro
+        </div>
+        <div class="info">
+            <i class="fas fa-university"></i> UNINTER
+        </div>
+        <div class="course">
+            <i class="fas fa-book-open"></i> Atividade Extensionista II
+        </div>
+        <div class="year">
+            <i class="fas fa-calendar-alt"></i> 2025
+        </div>
+    </div>
+
+    <script>
+        // Animar elementos ao carregar a página
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animar feature cards com delay
+            const featureCards = document.querySelectorAll('.feature-card');
+            featureCards.forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.2}s`;
+            });
+
+            // Smooth scroll para links internos
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+
+            // Efeito de parallax no scroll
+            window.addEventListener('scroll', function() {
+                const scrolled = window.pageYOffset;
+                const parallax = document.querySelector('.floating-element');
+                if (parallax) {
+                    const speed = scrolled * 0.5;
+                    parallax.style.transform = `translateY(${speed}px)`;
+                }
+            });
+
+            // Animação do header no scroll
+            let lastScroll = 0;
+            window.addEventListener('scroll', function() {
+                const currentScroll = window.pageYOffset;
+                const header = document.querySelector('.header');
+                
+                if (currentScroll > lastScroll && currentScroll > 100) {
+                    header.style.transform = 'translateY(-100%)';
+                } else {
+                    header.style.transform = 'translateY(0)';
+                }
+                lastScroll = currentScroll;
+            });
+
+            // Efeito de digitação no título
+            const title = document.querySelector('.hero-title');
+            const originalText = title.textContent;
+            title.textContent = '';
+            
+            let i = 0;
+            const typeWriter = () => {
+                if (i < originalText.length) {
+                    title.textContent += originalText.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, 100);
+                }
+            };
+            
+            setTimeout(typeWriter, 500);
+        });
+
+        // Intersection Observer para animações
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observar elementos para animação
+        document.querySelectorAll('.feature-card, .cta-card').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html> 

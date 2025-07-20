@@ -1,0 +1,50 @@
+{
+  "name": "educaia-corporativa",
+  "version": "1.0.0",
+  "description": "Sistema de IA na Personalização do Ensino Corporativo",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --dev",
+    "build": "electron-builder",
+    "dist": "electron-builder --publish=never"
+  },
+  "keywords": [
+    "educacao",
+    "ia",
+    "corporativo",
+    "treinamento",
+    "personalizacao"
+  ],
+  "author": "Clarissa da Rosa Videiro",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^28.0.0",
+    "electron-builder": "^24.6.4"
+  },
+  "build": {
+    "appId": "com.educaia.corporativa",
+    "productName": "EducaIA Corporativa",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "**/*",
+      "!node_modules/**/*",
+      "!dist/**/*",
+      "!package-lock.json"
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "assets/icon.ico"
+    },
+    "mac": {
+      "target": "dmg",
+      "icon": "assets/icon.icns"
+    },
+    "linux": {
+      "target": "AppImage",
+      "icon": "assets/icon.png"
+    }
+  }
+} 

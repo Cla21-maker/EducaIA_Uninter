@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EducaIA Corporativa - Dashboard do Gestor</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #f1f5f9 100%);
+            min-height: 100vh;
+            color: #334155;
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(0,128,128,0.03) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(56,178,172,0.03) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(0,102,102,0.02) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .layout-root {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 300px;
+            background: linear-gradient(180deg, #fff 0%, #f8fafc 100%);
+            box-shadow: 2px 0 8px rgba(0,128,128,0.06);
+            display: flex;
+            flex-direction: column;
+            padding: 2rem 1.2rem 1.2rem 1.2rem;
+            min-height: 100vh;
+            border-right: none;
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100vh;
+            z-index: 200;
+            backdrop-filter: blur(10px);
+        }
+
+        .sidebar-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .sidebar-logo .logo-img {
+            width: 38px;
+            height: 38px;
+            border-radius: 0;
+            background: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #008080;
+        }
+
+        .sidebar-logo .logo-title {
+            font-size: 1.1rem;
+            font-weight: 900;
+            color: #008080;
+        }
+
+        .sidebar-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .sidebar-link {
+            color: #008080 !important;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.08rem;
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            padding: 0.5rem 1rem;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .sidebar-link::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, #008080, #38b2ac);
+            transition: width 0.3s ease;
+            z-index: -1;
+        }
+
+        .sidebar-link.active, .sidebar-link:hover {
+            background: linear-gradient(90deg, #008080, #38b2ac) !important;
+            color: #fff !important;
+        }
+        .sidebar-link.active i, .sidebar-link:hover i {
+            color: #fff !important;
+        }
+        
+        .sidebar-link.active::before, .sidebar-link:hover::before {
+            width: 100%;
+        }
+
+        .main-content-ev {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+            padding: 0;
+            margin-left: 300px;
+        }
+
+        .topbar {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 4px 20px rgba(0,128,128,0.08);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.1rem 2.5rem 1.1rem 2.5rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 2px solid #008080;
+            position: relative;
+        }
+        
+        .topbar::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #008080, transparent);
+        }
+
+        .topbar-search {
+            flex: 1;
+            margin: 0 2rem;
+            display: flex;
+            align-items: center;
+            background: rgba(246, 248, 250, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 0.8rem 1.2rem;
+            border: 1px solid rgba(0,128,128,0.1);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .topbar-search:focus-within {
+            background: rgba(255, 255, 255, 0.95);
+            border-color: #008080;
+            box-shadow: 0 0 0 3px rgba(0,128,128,0.1);
+            transform: translateY(-1px);
+        }
+
+        .topbar-search input {
+            border: none;
+            background: transparent;
+            outline: none;
+            font-size: 1rem;
+            width: 100%;
+            margin-left: 0.7rem;
+        }
+
+        .topbar-user .avatar-img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2.5px solid #008080;
+        }
+
+        .main-area {
+            flex: 1;
+            padding: 2.5rem 2.5rem 2rem 2.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+            background: none;
+        }
+
+        .section-title {
+            font-size: 1.7rem;
+            font-weight: 900;
+            color: #008080;
+            margin-bottom: 1.1rem;
+            letter-spacing: 0.5px;
+        }
+
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 2rem;
+        }
+
+        .course-card {
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0,128,128,0.08);
+            border: 2px solid transparent;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .course-card:hover {
+            box-shadow: 0 20px 40px rgba(0,128,128,0.15);
+            transform: translateY(-8px);
+            border-color: #008080;
+        }
+        
+        .course-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #008080, #38b2ac);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .course-card:hover::before {
+            opacity: 1;
+        }
+
+        .course-details {
+            padding: 1.2rem 1.2rem 1.5rem 1.2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.7rem;
+        }
+
+        .course-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #008080;
+            margin-bottom: 0.2rem;
+        }
+
+        .course-meta {
+            display: flex;
+            gap: 1.2rem;
+            font-size: 0.98rem;
+            color: #7b8794;
+            align-items: center;
+        }
+
+        .course-badge {
+            background: #008080 !important;
+            color: #fff !important;
+            font-weight: 700;
+            border-radius: 12px !important;
+            padding: 0.2rem 0.8rem;
+            font-size: 0.93rem;
+            margin-left: 0.5rem;
+        }
+
+        .btn-ev {
+            padding: 0.7rem 1.5rem;
+            border-radius: 16px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            border: none;
+            background: #008080;
+            color: #fff;
+            box-shadow: 0 8px 25px -8px rgba(0,128,128,0.2);
+            transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+        }
+
+        .btn-ev:hover {
+            background: #006666;
+            color: #fff;
+            transform: translateY(-3px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #008080;
+            color: #008080;
+            border-radius: 16px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.2s;
+        }
+
+        .btn-outline:hover {
+            background: #008080;
+            color: #fff;
+            border-color: #006666;
+            transform: translateY(-3px);
+        }
+
+        .progress-bar-ev {
+            background: #e0e6ed;
+            border-radius: 12px;
+            height: 12px;
+            margin-top: 0.7rem;
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .progress-bar-ev > div {
+            background: linear-gradient(90deg, #008080, #38b2ac);
+            height: 100%;
+            border-radius: 12px;
+            transition: width 0.8s ease;
+            position: relative;
+            box-shadow: 0 2px 4px rgba(0,128,128,0.3);
+        }
+        
+        .progress-bar-ev > div::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .course-card {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+        
+        .course-card:nth-child(1) { animation-delay: 0.1s; }
+        .course-card:nth-child(2) { animation-delay: 0.2s; }
+        .course-card:nth-child(3) { animation-delay: 0.3s; }
+        .course-card:nth-child(4) { animation-delay: 0.4s; }
+        .course-card:nth-child(5) { animation-delay: 0.5s; }
+        .course-card:nth-child(6) { animation-delay: 0.6s; }
+        
+        .btn-ev {
+            padding: 0.7rem 1.5rem;
+            border-radius: 16px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            border: none;
+            background: linear-gradient(135deg, #008080, #38b2ac);
+            color: #fff;
+            box-shadow: 0 8px 25px -8px rgba(0,128,128,0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-ev::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .btn-ev:hover::before {
+            left: 100%;
+        }
+        
+        .btn-ev:hover {
+            background: linear-gradient(135deg, #006666, #008080);
+            color: #fff;
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px -8px rgba(0,128,128,0.4);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #008080;
+            color: #008080;
+            border-radius: 16px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-outline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0,128,128,0.1), transparent);
+            transition: left 0.5s;
+        }
+        
+        .btn-outline:hover::before {
+            left: 100%;
+        }
+        
+        .btn-outline:hover {
+            background: linear-gradient(135deg, #008080, #38b2ac);
+            color: #fff;
+            border-color: #006666;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px -8px rgba(0,128,128,0.3);
+        }
+
+        .welcome-banner {
+            background: #008080;
+            color: #fff;
+            box-shadow: 0 8px 32px rgba(0,128,128,0.08);
+            padding: 2.2rem 2rem 2.2rem 2rem;
+            margin-bottom: 2.5rem;
+            display: flex;
+            align-items: center;
+            gap: 2.5rem;
+        }
+
+        @media (max-width: 900px) {
+            .layout-root { flex-direction: column; }
+            .sidebar {
+                position: static;
+                width: 100%;
+                min-height: unset;
+                flex-direction: row;
+                padding: 1rem;
+                height: auto;
+            }
+            .sidebar-menu { flex-direction: row; gap: 0.7rem; margin-bottom: 0; }
+            .main-content-ev {
+                margin-left: 0;
+            }
+            .main-area { padding: 1rem; }
+        }
+    </style>
+</head>
+<body>
+  <div class="layout-root">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <span class="logo-img"><i class="fas fa-graduation-cap fa-lg"></i></span>
+        <span class="logo-title">EducaIA Corporativa</span>
+      </div>
+      <!-- Perfil no menu lateral -->
+      <div class="sidebar-profile" style="background: #fff; border-radius: 20px; box-shadow: 0 4px 16px rgba(0,128,128,0.08); padding: 2.2rem 1.2rem 1.5rem 1.2rem; display: flex; flex-direction: column; align-items: center; margin-bottom: 2.5rem; border: none;">
+        <img src="https://randomuser.me/api/portraits/women/45.jpg" alt="Avatar" style="width: 76px; height: 76px; border-radius: 50%; border: 3px solid #008080; box-shadow: 0 2px 8px rgba(0,128,128,0.10); margin-bottom: 1rem;">
+        <h2 style="color: #008080; font-size: 1.13rem; font-weight: 900; margin-bottom: 0.3rem; text-align: center;">Maria Santos</h2>
+        <div style="color: #7b8794; font-size: 1rem; margin-bottom: 1.1rem; text-align: center;">Gestora de RH</div>
+        <div style="width: 100%; margin-bottom: 1.1rem;">
+          <div style="font-size: 0.97rem; color: #008080; font-weight: 700; margin-bottom: 0.3rem; text-align: center;">Gestão Geral</div>
+          <div class="progress-bar-ev" style="margin-bottom: 0.2rem;"><div style="width: 85%;"></div></div>
+          <span style="font-size:0.97rem; color:#008080; font-weight:700; text-align: center; display: block;">85% eficiência</span>
+        </div>
+        <button class="btn-ev" style="margin-top: 0.3rem; width: 100%; font-size: 1rem; padding: 0.6rem 0; text-align: center; display: block;">Editar Perfil</button>
+      </div>
+      <nav class="sidebar-menu">
+        <a href="#dashboard" class="sidebar-link active"><i class="fas fa-home"></i> Dashboard</a>
+        <a href="#equipe" class="sidebar-link"><i class="fas fa-users"></i> Equipe</a>
+        <a href="#relatorios" class="sidebar-link"><i class="fas fa-chart-bar"></i> Relatórios</a>
+        <a href="#configuracoes" class="sidebar-link"><i class="fas fa-cog"></i> Configurações</a>
+      </nav>
+    </aside>
+
+    <!-- Card fixo com informações da aluna -->
+    <div id="aluna-card" style="position: fixed; left: 1vw; bottom: 1vh; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.2); border-radius: 16px; box-shadow: 0 8px 32px rgba(0,0,0,0.06); padding: 1rem 1.5rem; min-width: 200px; max-width: 90vw; color: #008080; font-size: 0.95rem; display: flex; flex-direction: column; align-items: flex-start; gap: 0.3rem; animation: slideUp 0.8s ease-out 0.5s both;">
+        <div style="font-weight:800; font-size:1.1rem; display:flex; align-items:center; gap:0.5rem; color: #008080;">
+            <i class="fas fa-user-graduate"></i> Clarissa Videiro
+        </div>
+        <div style="display:flex; align-items:center; gap:0.5rem; color: #008080;">
+            <i class="fas fa-university"></i> UNINTER
+        </div>
+        <div style="display:flex; align-items:center; gap:0.5rem; color: #008080;">
+            <i class="fas fa-book-open"></i> Atividade Extensionista II
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content-ev">
+      <!-- Topbar -->
+      <div class="topbar">
+        <div class="topbar-search">
+          <i class="fas fa-search"></i>
+          <input type="text" placeholder="Buscar equipe, cursos, relatórios...">
+        </div>
+      </div>
+
+      <div class="main-area">
+
+
+        <section id="equipe">
+          <h2 class="section-title">Equipe em Destaque</h2>
+          <div class="courses-grid">
+            <div class="course-card">
+              <div style="position: relative;">
+                <img src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80" class="course-img" alt="Equipe 1">
+                <span class="course-badge" style="position: absolute; top: 10px; right: 10px; background:#f9a826; color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; z-index: 10;">Excelente</span>
+              </div>
+              <div class="course-details">
+                <div class="course-title" style="text-align: center; margin-bottom: 1rem;">Departamento de Tecnologia</div>
+                <div style="margin-bottom: 1rem;">
+                  <div class="progress-bar-ev" style="background:#e0e6ed; border-radius:12px; height:12px; width:100%; overflow:hidden; position: relative; box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);">
+                    <div style="background:linear-gradient(90deg,#38b2ac,#4c51bf); height:100%; width:94%; border-radius:12px; transition:width 0.8s ease; position: relative; box-shadow: 0 2px 4px rgba(0,128,128,0.3);"></div>
+                  </div>
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.5rem;">
+                    <span style="font-size:0.98rem; color:#38b2ac; font-weight:700;">94% de aproveitamento</span>
+                    <span style="font-size:0.9rem; color:#64748b;">42 de 45 colaboradores</span>
+                  </div>
+                </div>
+                <div class="course-meta">
+                  <span><i class="fas fa-users"></i> 45 colaboradores</span>
+                  <span><i class="fas fa-chart-line"></i> 94% eficiência</span>
+                  <span><i class="fas fa-star"></i> 4.8★</span>
+                </div>
+                <div style="text-align: center;">Equipe com alto desempenho em treinamentos e desenvolvimento.</div>
+                <div class="course-actions">
+                  <button class="btn-ev">Ver Detalhes</button>
+                  <button class="btn-ev btn-outline"><i class="fas fa-chart-bar"></i> Relatório</button>
+                </div>
+              </div>
+            </div>
+            <div class="course-card">
+              <div style="position: relative;">
+                <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=400&q=80" class="course-img" alt="Equipe 2">
+                <span class="course-badge" style="position: absolute; top: 10px; right: 10px; background:#38b2ac; color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; z-index: 10;">Bom</span>
+              </div>
+              <div class="course-details">
+                <div class="course-title" style="text-align: center; margin-bottom: 1rem;">Departamento de Vendas</div>
+                <div style="margin-bottom: 1rem;">
+                  <div class="progress-bar-ev" style="background:#e0e6ed; border-radius:12px; height:12px; width:100%; overflow:hidden; position: relative; box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);">
+                    <div style="background:linear-gradient(90deg,#38b2ac,#4c51bf); height:100%; width:78%; border-radius:12px; transition:width 0.8s ease; position: relative; box-shadow: 0 2px 4px rgba(0,128,128,0.3);"></div>
+                  </div>
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.5rem;">
+                    <span style="font-size:0.98rem; color:#38b2ac; font-weight:700;">78% de aproveitamento</span>
+                    <span style="font-size:0.9rem; color:#64748b;">25 de 32 colaboradores</span>
+                  </div>
+                </div>
+                <div class="course-meta">
+                  <span><i class="fas fa-users"></i> 32 colaboradores</span>
+                  <span><i class="fas fa-chart-line"></i> 78% eficiência</span>
+                  <span><i class="fas fa-star"></i> 4.6★</span>
+                </div>
+                <div style="text-align: center;">Equipe com bom progresso nos treinamentos de vendas.</div>
+                <div class="course-actions">
+                  <button class="btn-ev">Ver Detalhes</button>
+                  <button class="btn-ev btn-outline"><i class="fas fa-chart-bar"></i> Relatório</button>
+                </div>
+              </div>
+            </div>
+            <div class="course-card">
+              <div style="position: relative;">
+                <img src="https://images.unsplash.com/photo-1503676382389-4809596d5290?auto=format&fit=crop&w=400&q=80" class="course-img" alt="Equipe 3">
+                <span class="course-badge" style="position: absolute; top: 10px; right: 10px; background:#1a237e; color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; z-index: 10;">Regular</span>
+              </div>
+              <div class="course-details">
+                <div class="course-title" style="text-align: center; margin-bottom: 1rem;">Departamento de Operações</div>
+                <div style="margin-bottom: 1rem;">
+                  <div class="progress-bar-ev" style="background:#e0e6ed; border-radius:12px; height:12px; width:100%; overflow:hidden; position: relative; box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);">
+                    <div style="background:linear-gradient(90deg,#38b2ac,#4c51bf); height:100%; width:65%; border-radius:12px; transition:width 0.8s ease; position: relative; box-shadow: 0 2px 4px rgba(0,128,128,0.3);"></div>
+                  </div>
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.5rem;">
+                    <span style="font-size:0.98rem; color:#1a237e; font-weight:700;">65% de aproveitamento</span>
+                    <span style="font-size:0.9rem; color:#64748b;">18 de 28 colaboradores</span>
+                  </div>
+                </div>
+                <div class="course-meta">
+                  <span><i class="fas fa-users"></i> 28 colaboradores</span>
+                  <span><i class="fas fa-chart-line"></i> 65% eficiência</span>
+                  <span><i class="fas fa-star"></i> 4.2★</span>
+                </div>
+                <div style="text-align: center;">Equipe que precisa de mais atenção nos treinamentos.</div>
+                <div class="course-actions">
+                  <button class="btn-ev">Ver Detalhes</button>
+                  <button class="btn-ev btn-outline"><i class="fas fa-chart-bar"></i> Relatório</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section id="relatorios">
+          <h2 class="section-title">Relatórios de Desempenho</h2>
+          <div class="courses-grid">
+            <div class="course-card">
+              <div style="position: relative;">
+                <img src="https://images.unsplash.com/photo-1513258496099-48168024aec0?auto=format&fit=crop&w=400&q=80" class="course-img" alt="Relatório 1">
+                <span class="course-badge" style="position: absolute; top: 10px; right: 10px; background:#38b2ac; color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; z-index: 10;">Atualizado</span>
+              </div>
+              <div class="course-details">
+                <div class="course-title" style="text-align: center; margin-bottom: 1rem;">Relatório Semanal</div>
+                <div class="course-meta">
+                  <span><i class="fas fa-calendar"></i> Última semana</span>
+                  <span><i class="fas fa-users"></i> 156 colaboradores</span>
+                  <span><i class="fas fa-clock"></i> 1.847 cursos</span>
+                </div>
+                <div style="text-align: center;">Análise completa do desempenho da equipe na última semana.</div>
+                <div class="course-actions">
+                  <button class="btn-ev">Visualizar</button>
+                  <button class="btn-ev btn-outline"><i class="fas fa-download"></i> Baixar</button>
+                </div>
+              </div>
+            </div>
+            <div class="course-card">
+              <div style="position: relative;">
+                <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80" class="course-img" alt="Relatório 2">
+                <span class="course-badge" style="position: absolute; top: 10px; right: 10px; background:#f9a826; color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; z-index: 10;">Mensal</span>
+              </div>
+              <div class="course-details">
+                <div class="course-title" style="text-align: center; margin-bottom: 1rem;">Relatório Mensal</div>
+                <div class="course-meta">
+                  <span><i class="fas fa-calendar"></i> Este mês</span>
+                  <span><i class="fas fa-chart-bar"></i> Métricas</span>
+                  <span><i class="fas fa-target"></i> Metas</span>
+                </div>
+                <div style="text-align: center;">Relatório mensal com indicadores de performance e metas.</div>
+                <div class="course-actions">
+                  <button class="btn-ev">Visualizar</button>
+                  <button class="btn-ev btn-outline"><i class="fas fa-download"></i> Baixar</button>
+                </div>
+              </div>
+            </div>
+            <div class="course-card">
+              <div style="position: relative;">
+                <img src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=400&q=80" class="course-img" alt="Relatório 3">
+                <span class="course-badge" style="position: absolute; top: 10px; right: 10px; background:#1a237e; color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; z-index: 10;">Trimestral</span>
+              </div>
+              <div class="course-details">
+                <div class="course-title" style="text-align: center; margin-bottom: 1rem;">Relatório Trimestral</div>
+                <div class="course-meta">
+                  <span><i class="fas fa-calendar"></i> Q1 2025</span>
+                  <span><i class="fas fa-trending-up"></i> Tendências</span>
+                  <span><i class="fas fa-analytics"></i> Análise</span>
+                </div>
+                <div style="text-align: center;">Análise trimestral com tendências e projeções futuras.</div>
+                <div class="course-actions">
+                  <button class="btn-ev">Visualizar</button>
+                  <button class="btn-ev btn-outline"><i class="fas fa-download"></i> Baixar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Configurações -->
+        <section id="configuracoes">
+          <h2 class="section-title">Configurações do Sistema</h2>
+          <div class="courses-grid">
+            <div class="course-card">
+              <div class="course-details" style="flex-direction: column; align-items: flex-start;">
+                <div class="course-title">Configurações Gerais</div>
+                <div class="course-meta"><span><i class="fas fa-cog"></i> Sistema</span></div>
+                
+                <div style="margin: 1rem 0; padding: 1rem; background: #f8fafc; border-radius: 8px;">
+                  <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                    <span style="font-size: 0.9rem;">Notificações:</span>
+                    <span style="font-weight: 700; color: #008080;">Ativadas</span>
+                  </div>
+                  <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                    <span style="font-size: 0.9rem;">Backup automático:</span>
+                    <span style="font-weight: 700; color: #008080;">Diário</span>
+                  </div>
+                  <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                    <span style="font-size: 0.9rem;">Versão do sistema:</span>
+                    <span style="font-weight: 700; color: #008080;">2.1.0</span>
+                  </div>
+                </div>
+                
+                <div style="display: flex; gap: 0.5rem; margin-top: 1rem;">
+                  <button class="btn-ev" style="padding: 0.5rem 1rem; font-size: 0.9rem;"><i class="fas fa-cog"></i> Configurar</button>
+                  <button class="btn-ev btn-outline" style="padding: 0.5rem 1rem; font-size: 0.9rem;"><i class="fas fa-download"></i> Backup</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="course-card">
+              <div class="course-details" style="flex-direction: column; align-items: flex-start;">
+                <div class="course-title">Usuários e Permissões</div>
+                <div class="course-meta"><span><i class="fas fa-users-cog"></i> Administração</span></div>
+                
+                <div style="margin: 1rem 0; padding: 1rem; background: #f8fafc; border-radius: 8px;">
+                  <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                    <span style="font-size: 0.9rem;">Usuários ativos:</span>
+                    <span style="font-weight: 700; color: #008080;">156</span>
+                  </div>
+                  <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                    <span style="font-size: 0.9rem;">Administradores:</span>
+                    <span style="font-weight: 700; color: #008080;">3</span>
+                  </div>
+                  <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                    <span style="font-size: 0.9rem;">Gestores:</span>
+                    <span style="font-weight: 700; color: #008080;">8</span>
+                  </div>
+                </div>
+                
+                <div style="display: flex; gap: 0.5rem; margin-top: 1rem;">
+                  <button class="btn-ev" style="padding: 0.5rem 1rem; font-size: 0.9rem;"><i class="fas fa-user-plus"></i> Adicionar</button>
+                  <button class="btn-ev btn-outline" style="padding: 0.5rem 1rem; font-size: 0.9rem;"><i class="fas fa-shield-alt"></i> Permissões</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="course-card">
+              <div class="course-details" style="flex-direction: column; align-items: flex-start;">
+                <div class="course-title">Metas e Objetivos</div>
+                <div class="course-meta"><span><i class="fas fa-target"></i> Gestão</span></div>
+                
+                <div style="margin: 1rem 0; padding: 1rem; background: #f8fafc; border-radius: 8px;">
+                  <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                    <span style="font-size: 0.9rem;">Meta mensal:</span>
+                    <span style="font-weight: 700; color: #008080;">2.500 cursos</span>
+                  </div>
+                  <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                    <span style="font-size: 0.9rem;">Progresso atual:</span>
+                    <span style="font-weight: 700; color: #f9a826;">78%</span>
+                  </div>
+                  <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                    <span style="font-size: 0.9rem;">Engajamento:</span>
+                    <span style="font-weight: 700; color: #008080;">92%</span>
+                  </div>
+                </div>
+                
+                <div style="display: flex; gap: 0.5rem; margin-top: 1rem;">
+                  <button class="btn-ev" style="padding: 0.5rem 1rem; font-size: 0.9rem;"><i class="fas fa-edit"></i> Editar</button>
+                  <button class="btn-ev btn-outline" style="padding: 0.5rem 1rem; font-size: 0.9rem;"><i class="fas fa-chart-line"></i> Acompanhar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Ajuda & Suporte -->
+        <section id="ajuda">
+          <h2 class="section-title">Ajuda & Suporte</h2>
+          <div style="display: flex; gap: 2rem; flex-wrap: wrap; justify-content: center;">
+            <!-- Card FAQ -->
+            <div style="flex:1 1 320px; min-width:320px; max-width:400px; background:#fff; border-radius:20px; box-shadow:0 2px 8px rgba(0,128,128,0.07); border:2px solid #008080; padding:2rem; margin-bottom:1.5rem;">
+              <h3 style="color:#008080; font-size:1.2rem; margin-bottom:1.5rem;"><i class="fas fa-question-circle"></i> Perguntas Frequentes</h3>
+              <div class="faq-list">
+                <div class="faq-card" onclick="this.classList.toggle('open')" style="cursor:pointer; margin-bottom:1rem; background:#f6f8fa; border-radius:20px; box-shadow:0 1px 4px rgba(0,128,128,0.07); padding:1.1rem 1.3rem; transition:box-shadow 0.2s;">
+                  <div style="display:flex; align-items:center; gap:0.7rem; font-weight:700; color:#008080; font-size:1.08rem;">
+                    <i class="fas fa-users"></i> Como adicionar novos colaboradores?
+                  </div>
+                  <div class="faq-answer" style="margin-top:0.7rem; color:#444; font-size:1rem; display:none;">
+                    Acesse "Equipe" > "Adicionar Colaborador" e preencha os dados necessários.
+                  </div>
+                </div>
+                <div class="faq-card" onclick="this.classList.toggle('open')" style="cursor:pointer; margin-bottom:1rem; background:#f6f8fa; border-radius:20px; box-shadow:0 1px 4px rgba(0,128,128,0.07); padding:1.1rem 1.3rem; transition:box-shadow 0.2s;">
+                  <div style="display:flex; align-items:center; gap:0.7rem; font-weight:700; color:#008080; font-size:1.08rem;">
+                    <i class="fas fa-chart-bar"></i> Como gerar relatórios de desempenho?
+                  </div>
+                  <div class="faq-answer" style="margin-top:0.7rem; color:#444; font-size:1rem; display:none;">
+                    Na seção "Relatórios" você pode filtrar por período, departamento e métricas específicas.
+                  </div>
+                </div>
+                <div class="faq-card" onclick="this.classList.toggle('open')" style="cursor:pointer; margin-bottom:1rem; background:#f6f8fa; border-radius:20px; box-shadow:0 1px 4px rgba(0,128,128,0.07); padding:1.1rem 1.3rem; transition:box-shadow 0.2s;">
+                  <div style="display:flex; align-items:center; gap:0.7rem; font-weight:700; color:#008080; font-size:1.08rem;">
+                    <i class="fas fa-cog"></i> Como configurar metas de treinamento?
+                  </div>
+                  <div class="faq-answer" style="margin-top:0.7rem; color:#444; font-size:1rem; display:none;">
+                    Vá em "Configurações" > "Metas" e defina objetivos por departamento ou individual.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Card Dicas Rápidas -->
+            <div style="flex:1 1 320px; min-width:320px; max-width:400px; background:#fff; border-radius:20px; box-shadow:0 2px 8px rgba(0,128,128,0.07); border:2px solid #008080; padding:2rem; margin-bottom:1.5rem; display:flex; flex-direction:column; justify-content:space-between;">
+              <h3 style="color:#008080; font-size:1.2rem; margin-bottom:1.5rem;"><i class="fas fa-lightbulb"></i> Dicas de Gestão</h3>
+              <ul style="color:#444; font-size:1rem; margin-bottom:1.5rem; list-style:none; padding:0;">
+                <li style="margin-bottom:1rem;"><i class="fas fa-check-circle" style="color:#008080; margin-right:0.5rem;"></i> Monitore o engajamento diariamente para identificar tendências.</li>
+                <li style="margin-bottom:1rem;"><i class="fas fa-check-circle" style="color:#f9a826; margin-right:0.5rem;"></i> Configure alertas para colaboradores com baixo progresso.</li>
+                <li style="margin-bottom:1rem;"><i class="fas fa-check-circle" style="color:#1a237e; margin-right:0.5rem;"></i> Use relatórios semanais para acompanhar o desenvolvimento da equipe.</li>
+              </ul>
+              <div style="margin-top:auto;">
+                <h4 style="color:#008080; font-size:1.05rem; margin-bottom:0.5rem;"><i class="fas fa-envelope"></i> Suporte Técnico</h4>
+                <p style="font-size:0.98rem;">Precisa de ajuda? Entre em contato pelo e-mail <a href="mailto:suporte@educaia.com">suporte@educaia.com</a> ou use o chat de atendimento.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Smooth scroll para navegação
+    document.querySelectorAll('.sidebar-link').forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href').substring(1);
+        const targetSection = document.getElementById(targetId);
+        
+        if (targetSection) {
+          targetSection.scrollIntoView({ behavior: 'smooth' });
+          
+          // Remove active de todos os links
+          document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+          // Adiciona active ao link clicado
+          this.classList.add('active');
+        }
+      });
+    });
+
+    // FAQ interativo: abre/fecha resposta
+    document.addEventListener('DOMContentLoaded', function() {
+      document.querySelectorAll('.faq-card').forEach(function(card) {
+        card.addEventListener('click', function(e) {
+          if(e.target.closest('.faq-card')) {
+            this.classList.toggle('open');
+            let answer = this.querySelector('.faq-answer');
+            if(this.classList.contains('open')) {
+              answer.style.display = 'block';
+            } else {
+              answer.style.display = 'none';
+            }
+          }
+        });
+      });
+    });
+  </script>
+  
+  <!-- Modal Flutuante -->
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal-content" id="modal-content">
+      <button class="modal-close" id="modal-close"><i class="fas fa-times"></i></button>
+      <div class="modal-header">
+        <span class="modal-icon"><i class="fas fa-info-circle"></i></span>
+        <span class="modal-title" id="modal-title">Título do Modal</span>
+      </div>
+      <div class="modal-desc" id="modal-desc">Descrição ou instrução do modal.</div>
+      <div id="modal-body"></div>
+      <div class="modal-actions" id="modal-actions"></div>
+    </div>
+  </div>
+  
+  <!-- Sistema de Notificações -->
+  <div id="notification-container" style="position:fixed; top:2rem; right:2rem; z-index:10001; display:flex; flex-direction:column; gap:1rem;">
+    <!-- Notificações serão inseridas aqui dinamicamente -->
+  </div>
+  
+  <!-- Toast de Notificação -->
+  <div id="toast" style="display:none; position:fixed; bottom:2.5rem; right:2.5rem; background:linear-gradient(135deg,#1a237e,#4c51bf); color:#fff; padding:1.2rem 2.5rem; border-radius:16px; font-size:1.08rem; box-shadow:0 8px 32px rgba(26,34,54,0.2); z-index:10001; font-weight:700; letter-spacing:0.5px; backdrop-filter:blur(10px); border:1px solid rgba(255,255,255,0.1); transform:translateX(100%); transition:transform 0.3s ease;">Notificação</div>
+  
+  <script>
+    // Função para abrir modal com conteúdo customizado
+    function openModal(contentHtml, title = 'Informação', desc = '', actionsHtml = '') {
+      document.getElementById('modal-title').innerHTML = title;
+      document.getElementById('modal-desc').innerHTML = desc;
+      document.getElementById('modal-body').innerHTML = contentHtml;
+      document.getElementById('modal-actions').innerHTML = actionsHtml;
+      document.getElementById('modal-overlay').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+    
+    function closeModal() {
+      document.getElementById('modal-overlay').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+    
+    document.getElementById('modal-close').onclick = closeModal;
+    document.getElementById('modal-overlay').onclick = function(e) {
+      if(e.target === this) closeModal();
+    };
+    document.addEventListener('keydown', function(e) {
+      if(e.key === 'Escape') closeModal();
+    });
+
+    // Utilitário para extrair detalhes do card
+    function getCardDetails(card) {
+      return {
+        title: card.querySelector('.course-title')?.innerText || 'Item',
+        meta: card.querySelector('.course-meta')?.innerText || '',
+        desc: card.querySelector('div:nth-child(3)')?.innerText || '',
+        img: card.querySelector('.course-img')?.src || '',
+        badge: card.querySelector('.course-badge')?.outerHTML || ''
+      };
+    }
+
+    // Sistema de notificações avançado
+    function showNotification(title, message, type = 'info', duration = 5000) {
+      const container = document.getElementById('notification-container');
+      const notification = document.createElement('div');
+      
+      const colors = {
+        success: 'linear-gradient(135deg, #10b981, #059669)',
+        error: 'linear-gradient(135deg, #ef4444, #dc2626)',
+        warning: 'linear-gradient(135deg, #f59e0b, #d97706)',
+        info: 'linear-gradient(135deg, #3b82f6, #2563eb)'
+      };
+      
+      notification.style.cssText = `
+        background: ${colors[type]};
+        color: white;
+        padding: 1rem 1.5rem;
+        border-radius: 16px;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255,255,255,0.1);
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+        max-width: 350px;
+        position: relative;
+        overflow: hidden;
+      `;
+      
+      notification.innerHTML = `
+        <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.3rem;">
+          <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : type === 'warning' ? 'exclamation-triangle' : 'info-circle'}"></i>
+          <strong style="font-size:1rem;">${title}</strong>
+        </div>
+        <div style="font-size:0.9rem; opacity:0.9;">${message}</div>
+        <button onclick="this.parentElement.remove()" style="position:absolute; top:0.5rem; right:0.5rem; background:none; border:none; color:white; cursor:pointer; font-size:1.2rem;">×</button>
+      `;
+      
+      container.appendChild(notification);
+      
+      // Animação de entrada
+      setTimeout(() => {
+        notification.style.transform = 'translateX(0)';
+      }, 100);
+      
+      // Auto-remoção
+      setTimeout(() => {
+        notification.style.transform = 'translateX(100%)';
+        setTimeout(() => notification.remove(), 300);
+      }, duration);
+    }
+    
+    // Toast de notificação (mantido para compatibilidade)
+    function showToast(msg) {
+      var toast = document.getElementById('toast');
+      toast.innerText = msg;
+      toast.style.display = 'block';
+      toast.style.transform = 'translateX(0)';
+      setTimeout(()=>{ 
+        toast.style.transform = 'translateX(100%)';
+        setTimeout(() => toast.style.display = 'none', 300);
+      }, 3200);
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      // Botões de ação para equipes
+      document.querySelectorAll('.btn-ev').forEach(function(btn) {
+        btn.addEventListener('click', function(e) {
+          e.preventDefault();
+          let card = btn.closest('.course-card');
+          if(card) {
+            let d = getCardDetails(card);
+            let action = btn.innerText.trim();
+            
+            // Loading state
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Carregando...';
+            btn.disabled = true;
+            
+            setTimeout(() => {
+              btn.innerHTML = originalText;
+              btn.disabled = false;
+              
+              if(action.includes('Detalhes')) {
+                openModal(
+                  `<img src='${d.img}' alt='${d.title}' style='width:100%;max-width:340px;max-height:160px;object-fit:cover;margin-bottom:1.2rem;border-radius:0;'>
+                  <div style='color:#444; font-size:1.05rem; margin-bottom:0.5rem;'>${d.desc}</div>
+                  <div style='display:flex; gap:1.2rem; justify-content:center; margin-bottom:0.7rem; flex-wrap:wrap;'>${d.meta}</div>
+                  <div style='margin-bottom:1.2rem;'>
+                    <h3 style='color:#1a237e; font-size:1.1rem; margin-bottom:0.5rem;'>Métricas Detalhadas</h3>
+                    <div style='display:grid; grid-template-columns:1fr 1fr; gap:1rem; text-align:left;'>
+                      <div><strong>Colaboradores:</strong> 45</div>
+                      <div><strong>Eficiência:</strong> 94%</div>
+                      <div><strong>Cursos Concluídos:</strong> 156</div>
+                      <div><strong>Horas Treinamento:</strong> 2.847h</div>
+                    </div>
+                  </div>`,
+                  d.title,
+                  'Veja detalhes completos do curso e suas métricas.',
+                  `<button class='modal-btn' onclick='closeModal()'><i class="fas fa-times"></i> Fechar</button>`
+                );
+              } else if(action.includes('Relatório')) {
+                openModal(
+                  `<div style='font-size:1.1rem; margin-bottom:1.2rem;'>${d.title}</div>
+                  <div style='margin-bottom:1.2rem;'>
+                    <h3 style='color:#1a237e; font-size:1.1rem; margin-bottom:0.5rem;'>Dados do Relatório</h3>
+                    <div style='display:grid; grid-template-columns:1fr 1fr; gap:1rem; text-align:left;'>
+                      <div><strong>Período:</strong> Última semana</div>
+                      <div><strong>Total Colaboradores:</strong> 156</div>
+                      <div><strong>Cursos Ativos:</strong> 1.847</div>
+                      <div><strong>Horas Totais:</strong> 3.420h</div>
+                    </div>
+                  </div>`,
+                  'Relatório Detalhado',
+                  'Veja os dados completos do relatório deste curso.',
+                  `<button class='modal-btn' onclick='closeModal()'>Visualizar</button>
+                   <button class='modal-btn secondary' onclick='closeModal(); showToast("Relatório baixado com sucesso!")'>Baixar PDF</button>`
+                );
+              } else if(action.includes('Visualizar')) {
+                openModal(
+                  `<img src='${d.img}' alt='${d.title}' style='width:100%;max-width:340px;max-height:160px;object-fit:cover;margin-bottom:1.2rem;border-radius:0;'>
+                  <div style='color:#444; font-size:1.05rem; margin-bottom:0.5rem;'>${d.desc}</div>
+                  <div style='margin-bottom:1.2rem;'>
+                    <h3 style='color:#1a237e; font-size:1.1rem; margin-bottom:0.5rem;'>Resumo do Relatório</h3>
+                    <ul style='text-align:left; margin:0 auto; max-width:340px; color:#444; font-size:1rem;'>
+                      <li style='margin-bottom:0.3rem;'><i class='fas fa-chart-line' style='color:#38b2ac; margin-right:0.5rem;'></i>Análise de desempenho por departamento</li>
+                      <li style='margin-bottom:0.3rem;'><i class='fas fa-users' style='color:#38b2ac; margin-right:0.5rem;'></i>Engajamento dos colaboradores</li>
+                      <li style='margin-bottom:0.3rem;'><i class='fas fa-graduation-cap' style='color:#38b2ac; margin-right:0.5rem;'></i>Progresso nos treinamentos</li>
+                      <li style='margin-bottom:0.3rem;'><i class='fas fa-target' style='color:#38b2ac; margin-right:0.5rem;'></i>Metas e objetivos alcançados</li>
+                    </ul>
+                  </div>`,
+                  d.title,
+                  'Resumo visual do relatório deste curso.',
+                  `<button class='modal-btn' onclick='closeModal()'><i class="fas fa-times"></i> Fechar</button>`
+                );
+              } else if(action.includes('Configurar')) {
+                openModal(
+                  `<div style='margin-bottom:1.2rem;'>
+                    <h3 style='color:#1a237e; font-size:1.1rem; margin-bottom:0.5rem;'>Opções Disponíveis</h3>
+                    <div style='display:grid; grid-template-columns:1fr; gap:0.5rem; text-align:left;'>
+                      <div style='padding:0.5rem; background:#f8fafc; border-radius:8px;'><i class='fas fa-bell' style='color:#38b2ac; margin-right:0.5rem;'></i>Configurar notificações</div>
+                      <div style='padding:0.5rem; background:#f8fafc; border-radius:8px;'><i class='fas fa-database' style='color:#38b2ac; margin-right:0.5rem;'></i>Backup automático</div>
+                      <div style='padding:0.5rem; background:#f8fafc; border-radius:8px;'><i class='fas fa-palette' style='color:#38b2ac; margin-right:0.5rem;'></i>Personalizar interface</div>
+                      <div style='padding:0.5rem; background:#f8fafc; border-radius:8px;'><i class='fas fa-shield-alt' style='color:#38b2ac; margin-right:0.5rem;'></i>Configurações de segurança</div>
+                    </div>
+                  </div>`,
+                  'Configurações do Sistema',
+                  'Personalize as opções do sistema conforme sua necessidade.',
+                  `<button class='modal-btn' onclick='closeModal()'><i class="fas fa-times"></i> Fechar</button>`
+                );
+              } else if(action.includes('Adicionar')) {
+                openModal(
+                  `<form style='display:grid; gap:1rem; text-align:left;'>
+                    <div>
+                      <label style='display:block; margin-bottom:0.3rem; font-weight:700; color:#1a237e;'>Nome Completo:</label>
+                      <input type='text' style='width:100%; padding:0.5rem; border:1px solid #e0e6ed; border-radius:4px;'>
+                    </div>
+                    <div>
+                      <label style='display:block; margin-bottom:0.3rem; font-weight:700; color:#1a237e;'>E-mail:</label>
+                      <input type='email' style='width:100%; padding:0.5rem; border:1px solid #e0e6ed; border-radius:4px;'>
+                    </div>
+                    <div>
+                      <label style='display:block; margin-bottom:0.3rem; font-weight:700; color:#1a237e;'>Departamento:</label>
+                      <select style='width:100%; padding:0.5rem; border:1px solid #e0e6ed; border-radius:4px;'>
+                        <option>Tecnologia</option>
+                        <option>Vendas</option>
+                        <option>Operações</option>
+                        <option>RH</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label style='display:block; margin-bottom:0.3rem; font-weight:700; color:#1a237e;'>Nível de Acesso:</label>
+                      <select style='width:100%; padding:0.5rem; border:1px solid #e0e6ed; border-radius:4px;'>
+                        <option>Colaborador</option>
+                        <option>Gestor</option>
+                        <option>Administrador</option>
+                      </select>
+                    </div>
+                  </form>`,
+                  'Adicionar Novo Usuário',
+                  'Preencha os dados para adicionar um novo usuário ao sistema.',
+                  `<button class='modal-btn' onclick='closeModal(); showToast("Usuário adicionado com sucesso!")'><i class="fas fa-user-plus"></i> Adicionar</button>
+                   <button class='modal-btn secondary' onclick='closeModal()'><i class="fas fa-times"></i> Cancelar</button>`
+                );
+              } else if(action.includes('Editar')) {
+                openModal(
+                  `<form style='display:grid; gap:1rem; text-align:left;'>
+                    <div>
+                      <label style='display:block; margin-bottom:0.3rem; font-weight:700; color:#1a237e;'>Meta Mensal (cursos):</label>
+                      <input type='number' value='2500' style='width:100%; padding:0.5rem; border:1px solid #e0e6ed; border-radius:4px;'>
+                    </div>
+                    <div>
+                      <label style='display:block; margin-bottom:0.3rem; font-weight:700; color:#1a237e;'>Meta de Engajamento (%):</label>
+                      <input type='number' value='90' style='width:100%; padding:0.5rem; border:1px solid #e0e6ed; border-radius:4px;'>
+                    </div>
+                    <div>
+                      <label style='display:block; margin-bottom:0.3rem; font-weight:700; color:#1a237e;'>Meta de Horas Treinamento:</label>
+                      <input type='number' value='4000' style='width:100%; padding:0.5rem; border:1px solid #e0e6ed; border-radius:4px;'>
+                    </div>
+                  </form>`,
+                  'Editar Metas e Objetivos',
+                  'Atualize as metas e objetivos da equipe.',
+                  `<button class='modal-btn' onclick='closeModal(); showToast("Metas atualizadas com sucesso!")'><i class="fas fa-save"></i> Salvar</button>
+                   <button class='modal-btn secondary' onclick='closeModal()'><i class="fas fa-times"></i> Cancelar</button>`
+                );
+              }
+            }, 800);
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html> 
